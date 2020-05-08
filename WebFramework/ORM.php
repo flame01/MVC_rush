@@ -64,6 +64,7 @@ class ORM {
     // TODO: Implement this function
     $query = $this->db->prepare($this->query);
     $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
     $query = '';
   }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 class User {
   private $user_id; // @type integer
   private $username; // @type string
@@ -123,7 +124,7 @@ class User {
     }elseif($this->password !== $this->passwordConfirmation) {
         $err = $err . "Both password fields must coincide.<br>";
 
-      }elseif (strlen($this->password) < 8 || strlen($this->password) > 20) {
+      }elseif (strlen($this->password) < 1 || strlen($this->password) > 20) {
           $err = $err . "Password must have between 8 and 20 characters.<br>";
       }   
 
@@ -133,5 +134,10 @@ class User {
 
     return $err;
   }
+
+
+
+
+  
 
 }
