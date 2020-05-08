@@ -69,7 +69,6 @@ class ORM {
 
   //select("users", "user_id, username, email", "user_id > 3", true);
   public function select($table, $values = "*", $condition = null, $multiple = true){
-
     $query = "SELECT $values FROM $table";
     if($condition !== NULL){
       $query .= "WHERE $condition"; 
@@ -82,6 +81,5 @@ class ORM {
       return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     return $query->fetch(PDO::FETCH_ASSOC);
-
   }
 }

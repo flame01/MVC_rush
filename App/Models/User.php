@@ -6,6 +6,7 @@ class User {
   private $user_id; // @type integer
   private $username; // @type string
   private $password; // @type string
+  private $passwordConfirmation; // @type string
   private $email; // @type string
   private $group_id; // @type integer
   private $is_banned; // @type integer
@@ -25,6 +26,11 @@ class User {
 
   public function setPassword(string $password): self {
     $this->password = $password;
+    return $this;
+  }
+
+  public function setPasswordConfirmation(string $passwordConfirmation): self {
+    $this->passwordConfirmation = $passwordConfirmation;
     return $this;
   }
 
@@ -102,15 +108,24 @@ class User {
   public function validate(): string {
     $err = '';
 
-    if (empty($this->username) || strlen($this->username) <= 3) {
-      $err = $err . "Invalid 'username' field. Must have more than 3 characters.<br>";
+    if (empty($this->username) || strlen($this->username) < 3 || strlen($this->username) > 10) {
+      $err = $err . "Username field must have between 3 and 10 characters.<br>";
     }
-    if (empty($this->email) || preg_match('#^[a-zA-Z0-9]+@[a-zA-Z]{2,}\.[a-z]{2,4}$#', $this->email) != 1) {
-      $err = $err . "Invalid 'email' field. Wrong format.<br>";
+    if(empty($this->email)){
+      $err = $err . "Email field must be filled.<br>";
+    }elseif (preg_match('#^[a-zA-Z0-9]+@[a-zA-Z]{2,}\.[a-z]{2,4}$#', $this->email) != 1) {
+      $err = $err . "Wrong format for email field.<br>";
     }
-    if (empty($this->password)) {
-      $err = $err . "Invalid 'password' field. Can't be blank.<br>";
-    }
+   
+    if (empty($this->password) || empty($this->passwordConfirmation)) {
+      $err = $err . "Both password fields must be filled.<br>";
+      
+    }elseif($this->password !== $this->passwordConfirmation) {
+        $err = $err . "Both password fields must coincide.<br>";
+
+      }elseif (strlen($this->password) < 8 || strlen($this->password) > 20) {
+          $err = $err . "Password must have between 8 and 20 characters.<br>";
+      }   
 
     if (!empty($err)) {
       throw new \Exception($err);

@@ -4,7 +4,9 @@
 
 {% block body %}
   {{ error.get() | raw }}
-  <div class="container">
+  <div class="container" style="margin-top: 5vw; padding: 5vw;background-color: #66a3ff; border-radius:15px;">
+    <h2 align="center">Register</h2>
+    <hr>
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <form action="/{{ base }}register" name="sentMessage" id="contactForm" method="post" novalidate>
@@ -32,9 +34,18 @@
               <p class="help-block text-danger"></p>
             </div>
           </div>
+          <div class="control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+              <label>Confirm password</label>
+              <input type="password" class="form-control" placeholder="Password confirmation" id="password_confirmation" name="password_confirmation"
+               required data-validation-required-message="Please enter you the password confirmation.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
           <div id="success"></div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-secondary" id="sendMessageButton">Register</button>
+          <div class="form-group" align="center">
+            <br>
+            <button type="submit" class="btn btn-info" id="sendMessageButton">Register</button>
           </div>
         </form>
       </div>

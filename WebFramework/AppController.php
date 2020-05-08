@@ -17,8 +17,7 @@ class AppController {
   public $session;
   public $flashError;
 
-  public function __construct()
-  {
+  public function __construct(){
     $loader = new Twig_Loader_Filesystem("../App/Views");
     $twig = new Twig_Environment($loader, []);
     $this->twig = $twig;

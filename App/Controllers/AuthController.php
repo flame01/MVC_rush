@@ -19,9 +19,14 @@ class AuthController extends AppController {
     $user->setUsername($request->params['username']);
     $user->setEmail($request->params['email']);
     $user->setPassword($request->params['password']);
+    $user->setPasswordConfirmation($request->params['password_confirmation']);
 
     try {
       $user->validate();
+      if (!$user->checkIfExist()){
+        $user->addToDB();
+      }
+      
     } catch (\Exception $e) {
       $this->flashError->set($e->getMessage());
       $this->redirect('/' . $request->base . 'register', '302');
