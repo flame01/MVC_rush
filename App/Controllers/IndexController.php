@@ -9,7 +9,8 @@ use App\Models\User;
 
 class IndexController extends AppController{
   public function index(Request $request){
-  	return $this->render('index.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
+  	$userList = $this->orm->select("User");
+  	return $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList]);
   }
   
 }

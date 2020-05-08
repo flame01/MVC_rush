@@ -5,5 +5,16 @@
 {% block body %}
 
 	<h1>Hello World!</h1>
+	<br><br>
+
+	
+    {% for user in userList %}
+    <ul>
+        <li>{{ user.username }}</li>
+        <li>{{ user.email }}</li>
+    </ul>
+    {% endfor %}
+	
+
 
 {% endblock %}

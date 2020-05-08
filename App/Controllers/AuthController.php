@@ -24,12 +24,22 @@ class AuthController extends AppController {
       $user->validate();
     } catch (\Exception $e) {
       $this->flashError->set($e->getMessage());
-      $this->redirect('/' . $request->base . 'auth/register', '302');
+      $this->redirect('/' . $request->base . 'register', '302');
       return;
     }
 
     var_dump($user);
+
+    $userToInsert = $user->getUsername();
+    $passwordToInsert = $user->getPassword();
+    $emailToInsert = $user->getEmail();
+
+    $query = "INSERT INTO User(username, password, email) VALUES ('$userToInsert', '$passwordToInsert', '$emailToInsert');";
+
+    $this->orm->persist($query);
+    $this->orm->flush();
+
     // TODO: Store user in the database with the ORM (this->orm).
-    die();
+    $this->redirect('/' . $request->base . '', '302');
   }
 }
