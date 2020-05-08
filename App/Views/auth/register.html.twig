@@ -1,10 +1,21 @@
 {# auth/register.html.twig #}
 
+
 {% extends 'base.html.twig' %}
 
 {% block body %}
+  
+<style type="text/css">
+  .container{
+    margin-top: 5vw;
+    padding: 5vw;
+    background-color: #66a3ff;
+    border-radius:15px;
+  }
+</style>
+
   {{ error.get() | raw }}
-  <div class="container" style="margin-top: 5vw; padding: 5vw;background-color: #66a3ff; border-radius:15px;">
+  <div class="container">
     <h2 align="center">Register</h2>
     <hr>
     <div class="row">

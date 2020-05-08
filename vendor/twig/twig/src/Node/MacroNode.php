@@ -34,7 +34,7 @@ class MacroNode extends Node
         parent::__construct(['body' => $body, 'arguments' => $arguments], ['name' => $name], $lineno, $tag);
     }
 
-    public function compile(Compiler $compiler): void
+    public function compile(Compiler $compiler)
     {
         $compiler
             ->addDebugInfo($this)
@@ -88,13 +88,7 @@ class MacroNode extends Node
             ->outdent()
             ->write("]);\n\n")
             ->write("\$blocks = [];\n\n")
-        ;
-        if ($compiler->getEnvironment()->isDebug()) {
-            $compiler->write("ob_start();\n");
-        } else {
-            $compiler->write("ob_start(function () { return ''; });\n");
-        }
-        $compiler
+            ->write("ob_start(function () { return ''; });\n")
             ->write("try {\n")
             ->indent()
             ->subcompile($this->getNode('body'))
@@ -111,3 +105,5 @@ class MacroNode extends Node
         ;
     }
 }
+
+class_alias('Twig\Node\MacroNode', 'Twig_Node_Macro');

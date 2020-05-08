@@ -22,20 +22,16 @@ class NullCoalesceExpression extends ConditionalExpression
 {
     public function __construct(Node $left, Node $right, int $lineno)
     {
-        $test = new DefinedTest(clone $left, 'defined', new Node(), $left->getTemplateLine());
-        // for "block()", we don't need the null test as the return value is always a string
-        if (!$left instanceof BlockReferenceExpression) {
-            $test = new AndBinary(
-                $test,
-                new NotUnary(new NullTest($left, 'null', new Node(), $left->getTemplateLine()), $left->getTemplateLine()),
-                $left->getTemplateLine()
-            );
-        }
+        $test = new AndBinary(
+            new DefinedTest(clone $left, 'defined', new Node(), $left->getTemplateLine()),
+            new NotUnary(new NullTest($left, 'null', new Node(), $left->getTemplateLine()), $left->getTemplateLine()),
+            $left->getTemplateLine()
+        );
 
         parent::__construct($test, $left, $right, $lineno);
     }
 
-    public function compile(Compiler $compiler): void
+    public function compile(Compiler $compiler)
     {
         /*
          * This optimizes only one case. PHP 7 also supports more complex expressions
@@ -58,3 +54,5 @@ class NullCoalesceExpression extends ConditionalExpression
         }
     }
 }
+
+class_alias('Twig\Node\Expression\NullCoalesceExpression', 'Twig_Node_Expression_NullCoalesce');

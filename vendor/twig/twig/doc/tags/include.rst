@@ -12,8 +12,9 @@ of that file:
 
 .. note::
 
-    It is recommended to use the :doc:`include<../functions/include>` function
-    instead as it provides the same features with a bit more flexibility:
+    As of Twig 1.12, it is recommended to use the
+    :doc:`include<../functions/include>` function instead as it provides the
+    same features with a bit more flexibility:
 
     * The ``include`` function is semantically more "correct" (including a
       template outputs its rendered contents in the current scope; a tag should
@@ -35,7 +36,7 @@ of that file:
               {% include 'template.html' %}
           {% endfilter %}
           {# vs #}
-          {{ include('template.html')|upper }}
+          {% include('template.html')|upper %}
 
     * The ``include`` function does not impose any specific order for
       arguments thanks to :ref:`named arguments <named-arguments>`.

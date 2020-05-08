@@ -29,7 +29,7 @@ final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
     private $inAModule = false;
     private $hasMacroCalls = false;
 
-    public function enterNode(Node $node, Environment $env): Node
+    public function enterNode(Node $node, Environment $env)
     {
         if ($node instanceof ModuleNode) {
             $this->inAModule = true;
@@ -39,12 +39,16 @@ final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
         return $node;
     }
 
-    public function leaveNode(Node $node, Environment $env): Node
+    public function leaveNode(Node $node, Environment $env)
     {
         if ($node instanceof ModuleNode) {
             $this->inAModule = false;
             if ($this->hasMacroCalls) {
-                $node->getNode('constructor_end')->setNode('_auto_macro_import', new ImportNode(new NameExpression('_self', 0), new AssignNameExpression('_self', 0), 0, 'import', true));
+                $body = [new ImportNode(new NameExpression('_self', 0), new AssignNameExpression('_self', 0), 0, 'import', true)];
+                foreach ($node->getNode('body') as $n) {
+                    $body[] = $n;
+                }
+                $node->setNode('body', new Node($body));
             }
         } elseif ($this->inAModule) {
             if (
@@ -64,7 +68,7 @@ final class MacroAutoImportNodeVisitor implements NodeVisitorInterface
         return $node;
     }
 
-    public function getPriority(): int
+    public function getPriority()
     {
         // we must be ran before auto-escaping
         return -10;
