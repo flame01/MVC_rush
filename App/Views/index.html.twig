@@ -1,17 +1,53 @@
+{#
+** EPITECH PROJECT, 2020:
+** MVC_Rush_PHP
+**
+** index.html.twig
+** File description:
+**  This file is in charge of show data in index.html.twig
+**
+#}
 {# index.html.twig #}
 
 {% extends 'base.html.twig' %}
 
+{% block navbar %}
+	{% include('navbar.html.twig') %}
+{% endblock %}
+
 {% block body %}
+	<style type="text/css">
+		.container{
+			margin-top: 5vw;
+			padding: 5vw;
+			background-color: #66a3ff;
+			border-radius:15px;
+		}
+		.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  			background-color: white;
+		}
 
-	<h1>Hello World!</h1>
-	<br><br>
 
-	
-    {% for user in userList %}
-    <ul>
-        <li>{{ user.username }}</li>
-        <li>{{ user.email }}</li>
-    </ul>
-    {% endfor %}
+	</style>
+
+	<div class="container my-container" align="center">
+		<h1>List of users</h1>
+		<table class="table table-hover container my-container">
+			<thead>
+				<tr class="bg-warning">
+					<th scope="col">Username</th>
+					<th scope="col">Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in userList %}
+					<tr>
+						<td>{{ user.username }}</td>
+						<td>{{ user.email }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>	
+	</div>
+
 {% endblock %}

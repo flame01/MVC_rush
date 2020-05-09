@@ -7,8 +7,8 @@ USE MVC_rush;
 CREATE TABLE User (
 	user_id INT NOT NULL AUTO_INCREMENT,
 	username VARCHAR(255),
-    password VARCHAR(255),
 	email VARCHAR(255),
+    password VARCHAR(255),
     group_id INT NOT NULL DEFAULT '2',
     is_banned TINYINT(4) NOT NULL DEFAULT '0',
     is_activated TINYINT(4) NOT NULL DEFAULT '1',

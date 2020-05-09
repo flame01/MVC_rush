@@ -1,0 +1,4 @@
+Things to fix:
+	1. Redirect correctly after successful login.
+	2. Show an error after failed login.
+	3. Redirect to index when session is initiated and user tries to go into register or login page.

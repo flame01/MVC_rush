@@ -1,5 +1,13 @@
 <?php
-
+/*
+** EPITECH PROJECT, 2020:
+** MVC_Rush_PHP
+**
+** User.php
+** File description:
+**  File in charge of manage a User class instance
+**
+*/
 namespace App\Models;
 
 

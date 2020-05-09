@@ -1,27 +1,40 @@
+{#
+** EPITECH PROJECT, 2020:
+** MVC_Rush_PHP
+**
+** login.html.twig
+** File description:
+**  This file is in charge of show data in login.html.twig
+**
+#}
 {# auth/register.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% block navbar %}
+  {% include('navbar.html.twig') %}
+{% endblock %}
+
 {% block body %}
   
-<style type="text/css">
-  .container{
-    margin-top: 5vw;
-    padding: 5vw;
-    background-color: #66a3ff;
-    border-radius:15px;
-  }
+  <style type="text/css">
+    .container{
+      margin-top: 5vw;
+      padding: 5vw;
+      background-color: #66a3ff;
+      border-radius:15px;
+    }
 
-  .errorMessage{
-    margin-top: 5vw;
-    padding: 5vw;
-    color: red;
-    border-radius:15px;
-  }
+    .errorMessage{
+      margin-top: 5vw;
+      padding: 5vw;
+      color: red;
+      border-radius:15px;
+    }
 
-  #link{
-    color: teal;
-  }
-</style>
+    #link{
+      color: teal;
+    }
+  </style>
 
   
   <div class="container">
@@ -29,11 +42,11 @@
     <hr>
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form action="/{{ base }}register" name="sentMessage" id="contactForm" method="post" novalidate>
+        <form action="/{{ base }}login" name="sentMessage" id="contactForm" method="post" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username/Email</label>
-              <input type="text" class="form-control" placeholder="Username/Email" id="name" name="username" required
+              <input type="text" class="form-control" placeholder="Username/Email" id="name" name="username-email" required
                  data-validation-required-message="Please enter your name.">
               <p class="help-block text-danger"></p>
             </div>
@@ -46,7 +59,7 @@
               <p class="help-block text-danger"></p>
             </div>
           </div>
-
+          <input type="checkbox" name="remember_me" uncheck="true"> Remember me<br>
           <div id="success"></div>
           <br>
           <div align="center">
@@ -54,9 +67,6 @@
             <a id="link" href="register">Register here</a>
             <br><br>
           </div>
-
-
-
           <div class="form-group" align="center">
             <br>
             <button type="submit" class="btn btn-info" id="sendMessageButton">Login</button>
