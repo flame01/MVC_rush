@@ -22,13 +22,18 @@ class IndexController extends AppController{
       $userList = $this->orm->select("User");
       session_start();
 
-      $sessionUsername = $_SESSION["username"];
+      $session["username"] = $_SESSION["username"];
+      $session["email"] = $_SESSION["email"];
+      $session["group_id"] = $_SESSION["group_id"];
+
       if(empty($_SESSION["username"])){
-        $sessionUsername = $_COOKIE['username'];
+        $session["username"] = $_SESSION["username"];
+        $session["email"] = $_SESSION["email"];
+        $session["group_id"] = $_SESSION["group_id"];
       }
   
     // Render the index_view in index.html.twig
-  	return $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionUsername' => $sessionUsername]);
+  	return $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session]);
   }
   
 }

@@ -25,15 +25,9 @@
     }
 
     .errorMessage{
-      margin-top: 5vw;
-      padding: 5vw;
       color: red;
-      border-radius:15px;
     }
 
-    #link{
-      color: teal;
-    }
   </style>
 
   
@@ -42,20 +36,20 @@
     <hr>
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form action="/{{ base }}settings" name="sentMessage" id="contactForm" method="post" novalidate>
+        <form action="/settings" name="sentMessage" id="contactForm" method="post" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username</label>
-              <input type="text" class="form-control" placeholder="Username/Email" id="name" name="username" required
-                 data-validation-required-message="Please enter your name.">
+              <input type="text" class="form-control" value="{{ sessionValues["username"] }}" id="name" name="username" required
+                 data-validation-required-message="Please enter your name." disabled>
               <p class="help-block text-danger"></p>
             </div>
           </div>
            <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Email</label>
-              <input type="text" class="form-control" placeholder="Username/Email" id="name" name="email" required
-                 data-validation-required-message="Please enter your name.">
+              <input type="text" class="form-control" value="{{ sessionValues["email"] }}" id="name" name="email" required
+                 data-validation-required-message="Please enter your name." disabled>
               <p class="help-block text-danger"></p>
             </div>
           </div>
@@ -70,7 +64,7 @@
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Confirm password</label>
-              <input type="password" class="form-control" placeholder="Password" id="passwordConfirm" name="passwordConfirm"
+              <input type="password" class="form-control" placeholder="Confirm password" id="passwordConfirm" name="passwordConfirm"
                required data-validation-required-message="Please enter your password.">
               <p class="help-block text-danger"></p>
             </div>
@@ -79,13 +73,12 @@
             <br>
             <button type="submit" class="btn btn-danger" id="sendMessageButton">Delete account</button>
           </div>
+          
         </form>
+         <div class="errorMessage" align="center">      {{ error.get() | raw }}
+           </div>
       </div>
     </div>
   </div>
-  <div class="errorMessage" align="center">
-    {{ error.get() | raw }}
-  </div>
-
 {% endblock %}
 

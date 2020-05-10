@@ -22,6 +22,7 @@ class LogOutController extends AppController {
   	session_start();
 	session_destroy();
 	setcookie('username','', time()-3600);
+	setcookie('email','', time()-3600);
     return $this->render('auth/login.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
   }   
 }

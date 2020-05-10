@@ -27,10 +27,10 @@
     }
 
     .errorMessage{
-      margin-top: 5vw;
-      padding: 5vw;
       color: red;
-      border-radius:15px;
+    }
+    .createdMessage{
+      color: green;
     }
     .successMessage{
       color: green;
@@ -77,12 +77,13 @@
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label>Confirm assword</label>
+              <label>Confirm password</label>
               <input type="password" class="form-control" placeholder="Password confirmation" id="password_confirmation" name="password_confirmation"
                required data-validation-required-message="Please enter you the password confirmation.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
+          <div class="errorMessage" align="center">{{ error.get() | raw }}</div>
           <div id="success"></div>
           <br>
           <div align="center">
@@ -99,14 +100,4 @@
       </div>
     </div>
   </div>
-  <div class="successMessage" align="center">
-    {{ message.get() | raw }}
-  </div>
-
-  <div class="errorMessage" align="center">
-    {{ error.get() | raw }}
-  </div>
-
-  
-  
 {% endblock %}

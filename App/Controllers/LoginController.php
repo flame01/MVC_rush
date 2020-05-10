@@ -36,34 +36,43 @@ class LoginController extends AppController {
   			session_start();
   			$_SESSION["user_id"] = $result["user_id"];
   			$_SESSION["username"] = $result["username"];
+        $_SESSION["email"] = $result["email"];
+        $_SESSION["group_id"] = $result["group_id"];
+        //Check if Remember me is checked and create cookies.
         if(isset($remember)){
           setcookie("username", $_SESSION["username"], time()+3600);
+          setcookie("email", $_SESSION["email"], time()+3600);
+          setcookie("group_id", $_SESSION["group_id"], time()+3600);
         }
   			return true;
   		}
   	}
-
-
   }
 
   public function login(Request $request) {
+    $userList = $this->orm->select("User");
+
   	// Obtain POST values of login.html.twig
   	$usernameEmail = $request->params['username-email'];
   	$password = $request->params['password'];
     $remember = $request->params['remember_me'];
+    try{
+    	if ($this->correctCredentials($usernameEmail, $password, $remember)){
+        $session["username"] = $_SESSION["username"];
+        $session["email"] = $_SESSION["email"];
+        $session["group_id"] = $_SESSION["group_id"];
 
-  	if ($this->correctCredentials($usernameEmail, $password, $remember)){
+        //redirect to index
+        $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session,'error' => $this->flashError]);
 
-  		//Check if Remember me is checked and create cookies.
-
-      //redirect to index
-      var_dump($remember);
-      //return $this->render('index', ['base' => $request->base, 'error' => $this->flashError]);
-  	}else{
-  		$err = "Invalid credentials.<br>";
-  		var_dump($err);
-  		throw new \Exception($err);
-  	}
+    	}else{
+    		$err = "Invalid credentials.<br>";
+    		throw new \Exception($err);
+    	}
+    }catch (\Exception $e) {
+      $this->flashError->set($e->getMessage());
+      $this->redirect('login', '302');
+    }
   }
     
 }

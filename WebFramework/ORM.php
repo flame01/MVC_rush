@@ -83,4 +83,13 @@ class ORM {
     }
     return $query->fetch(PDO::FETCH_ASSOC);
   }
+
+  public function delete($table, $condition){
+    $query = "DELETE FROM $table WHERE $condition";
+
+    $queryPrepare = $this->db->prepare($query);
+    $queryPrepare->execute();
+
+    return $queryPrepare->rowCount();
+  }
 }

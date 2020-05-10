@@ -1,0 +1,104 @@
+{#
+** EPITECH PROJECT, 2020:
+** MVC_Rush_PHP
+**
+** admin.html.twig
+** File description:
+**  This file is in charge of show data in admin.html.twig
+**
+#}
+{# index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+	{% include('navbar.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+
+	<style type="text/css">
+		.my-container{
+			margin-top: 5vw;
+			padding: 5vw;
+			background-color: #66a3ff;
+			border-radius:15px;
+		}
+		.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  			background-color: white;
+		}
+
+
+	</style>
+
+	{%  if sessionValues["group_id"] == 0 %}
+		<div class="container my-container" align="center">
+			<h2>Users administration</h2>
+			<table class="table table-hover my-container container">
+				<thead>
+					<tr class="bg-warning">
+						<th scope="col">Username</th>
+						<th scope="col">Email</th>
+						<th scope="col">Permissions</th>
+						<th scope="col">Banned</th>
+						<th scope="col">Activated</th>
+						<th scope="col">Creation Date</th>
+						<th scope="col">Last modification</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in userList %}
+						<tr align="center">
+							<td><input type="text" name="username" value="{{ user.username }}"></td>
+							<td><input type="text" name="email" value="{{ user.email }}"></td>
+							<td>
+								<select>
+									{%  if user.group_id == 0 %}
+									<option>Admin</option>
+									<option>Writer</option>
+									<option>User</option>
+									{% elseif user.group_id == 1 %}
+										<option>Writer</option>
+										<option>Admin</option>
+										<option>User</option>
+									{% elseif user.group_id == 2 %}
+										<option>User</option>
+										<option>Writer</option>
+										<option>Admin</option>
+									{% endif %}
+								</select>
+							</td>		
+							<td>
+								{%  if user.is_banned == 1 %}
+									<input type="checkbox" data-toggle="toggle" checked="true" >
+								{% else %}
+									<input type="checkbox" data-toggle="toggle">
+								{% endif %}
+							</td>
+							<td>
+								{%  if user.is_activated == 1 %}
+									<input type="checkbox" data-toggle="toggle" checked="true" >
+								{% else %}
+									<input type="checkbox" data-toggle="toggle">
+								{% endif %}
+							</td>
+							<td>{{ user.creation_date }}</td>
+							<td>{{ user.last_modification }}</td>
+							<form action="admin/delete" method ="POST">
+				      			<input type="hidden" name="usernameToDelete" value="{{ user.username }}">
+				      			<td><button class="btn btn-danger" type="submit">Delete</button></td>
+						    </form>
+
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>	
+			<a class="btn btn-info" href="admin/create">Create new user</a>
+		</div>
+	{% else %}
+		<h1>You are not an admin<h1>
+	{% endif %}
+
+{% endblock %}

@@ -81,7 +81,7 @@ class AuthController extends AppController {
     } catch (\Exception $e) {
       $this->flashError->set($e->getMessage());
       $this->redirect('/' . $request->base . 'register', '302');
-      return;
+      
     }
   }
 }

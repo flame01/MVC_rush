@@ -17,13 +17,20 @@ use WebFramework\Request;
 use App\Models\User;
 
 class SessionController extends AppController{
-	public function __construct() {
-		$userList = $this->orm->select("User");
-  		session_start();
+	public $userList = NULL;
+	public $sessionUsername = NULL;
 
-  		$sessionUsername = $_SESSION["username"];
-  		if(empty($_SESSION["username"])){
-  			$sessionUsername = $_COOKIE['username'];
-  		}
+	public function __construct() {
+		parent::__construct();
+		$this->userList = $this->orm->select("User");
+
+		if(!isset($_SESSION)){
+			session_start();
+		}
+
+		$this->sessionUsername = $_SESSION["username"];
+		if(empty($_SESSION["username"])){
+			$this->sessionUsername = $_COOKIE['username'];
+		} 
 	}
 }

@@ -4,8 +4,7 @@ namespace App\Helpers;
 
 use Exception;
 
-class Session
-{
+class Session{
   private static $instance = null;
 
   /**
@@ -21,8 +20,7 @@ class Session
    *
    * @return Session - Instance of the Session
    */
-  public static function getInstance()
-  {
+  public static function getInstance(){
     if (is_null(self::$instance)) {
       self::$instance = new Session();
     }
@@ -36,8 +34,7 @@ class Session
    *
    * @return string - The value associated with the specified attribute.
    */
-  public function get($attribute)
-  {
+  public function get($attribute){
     if ($this->exist($attribute)) {
       return $_SESSION[$attribute];
     }
@@ -52,8 +49,7 @@ class Session
    *
    * @return bool - True if existing and set, else false.
    */
-  private function exist($attribute)
-  {
+  private function exist($attribute){
     return (isset($_SESSION[$attribute]) && $_SESSION[$attribute] != "");
   }
 
@@ -63,8 +59,7 @@ class Session
    * @param string $attribute - Name of the attribute to set
    * @param string $value - Value of the attribute
    */
-  public function set($attribute, $value)
-  {
+  public function set($attribute, $value){
     $_SESSION[$attribute] = $value;
   }
 
@@ -75,8 +70,7 @@ class Session
    *
    * @return bool - True if the attribute was removed, else false
    */
-  public function remove($attribute)
-  {
+  public function remove($attribute){
     if ($this->exist($attribute)) {
       unset($_SESSION[$attribute]);
 
@@ -91,16 +85,14 @@ class Session
    *
    * @return mixed - Associative array containing every elements of the Session.
    */
-  public function getValues()
-  {
+  public function getValues(){
     return $_SESSION;
   }
 
   /**
    * Destroy the class by unsetting every attributes.
    */
-  public function destroy()
-  {
+  public function destroy(){
     session_destroy();
 
     foreach ($_SESSION as $key => $value) {

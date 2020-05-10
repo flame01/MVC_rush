@@ -32,14 +32,16 @@
   <ul>
   <li><a href="index">Home</a></li>
   
-  {%  if sessionUsername is empty %}
+  {%  if sessionValues['username'] is empty %}
     <li><a class="right-button" href="register">Register</a></li>
     <li><a class="right-button" href="login">Login</a></li>
-
   {% else %}
+    {%  if sessionValues['group_id'] == 0 %}
+      <li><a class="right-button" href="admin">Administration</a></li>
+    {% endif %}
     <li><a class="right-button" href="logout">Log Out</a></li>
     <li><a class="right-button" href="settings">My user settings</a></li>
-    <li><a class="right-button">Logged as: {{ sessionUsername }} </a></li>
+    <li><a class="right-button">Logged as: {{ sessionValues['username'] }} </a></li>
   {% endif %}
   </ul>
 </nav>
