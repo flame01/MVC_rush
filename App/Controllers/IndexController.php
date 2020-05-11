@@ -18,9 +18,10 @@ use App\Models\User;
 
 class IndexController extends AppController{
   public function index_view(Request $request){
-      $userList = $this->orm->select("User");
-    
+  	//select($table, $values = "*", $condition = null, $multiple = true)
+    $articlesList = $this->orm->select("Article", "article_id, title, LEFT(content, 150) AS 'content', created_by, creation_date", "ORDER BY creation_date DESC", true);
+
     // Render the index_view in index.html.twig
-  	return $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'session' => $this->session]);
+  	return $this->render('index.html.twig', ['base' => $request->base, 'articlesList' => $articlesList, 'session' => $this->session]);
   }
 }

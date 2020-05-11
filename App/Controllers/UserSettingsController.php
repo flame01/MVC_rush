@@ -33,10 +33,10 @@ class UserSettingsController extends AppController {
   public function correctCredentials($username, $password, $passwordConfirmation) {
     $err = '';
     // Check if the user introduced exists in the database and if the password is correct.
-    $result = $this->orm->select("User", "*", "username = '$username'", false);
+    $result = $this->orm->select("User", "*", "WHERE username = '$username'", false);
 
     if (empty($password) || empty($passwordConfirmation)) {
-      $err = $err . "Both paFssword fields must be filled.<br>";
+      $err = $err . "Both password fields must be filled.<br>";
 
     }elseif($password !== $passwordConfirmation) {
       $err = $err . "Both password fields must coincide.<br>";
@@ -48,14 +48,10 @@ class UserSettingsController extends AppController {
       throw new \Exception($err);
       return false;
     }
-
-    var_dump($username);
     return true;
   }
 
   public function deleteAccount(Request $request) {
-    $session = new SessionController();
-    
     try{
       if($this->correctCredentials($session->sessionUsername, $request->params['password'], $request->params['passwordConfirm'])){
 

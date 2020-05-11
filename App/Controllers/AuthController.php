@@ -31,7 +31,7 @@ class AuthController extends AppController {
 
     // Call the function select in ORM.php file with the corresponding parameters.
     //select($table, $values = "*", $condition = null, $multiple = true);
-    $result = $this->orm->select("User", "user_id, username, email", "username = '$userToInsert' OR email = '$emailToInsert'", false);
+    $result = $this->orm->select("User", "user_id, username, email", "WHERE username = '$userToInsert' OR email = '$emailToInsert'", false);
 
     // Check if we have any result.
     if(is_null($result["user_id"])){

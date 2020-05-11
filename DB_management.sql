@@ -39,7 +39,7 @@ CREATE TABLE Article (
 	article_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(255),
 	content VARCHAR(2000),
-    created_by VARCHAR(255) NOT NULL DEFAULT 'admin',
+    created_by VARCHAR(255) DEFAULT 'admin',
     category_id INT NOT NULL DEFAULT '0',
     creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_modification TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -52,6 +52,10 @@ VALUES ('About how I earned 1 million dooola', 'So my whole life, really it has 
 ('Hola me llamo Roberto', 'Es broma no me llamo Roberto, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'),
 ('Article 4', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
 ('Donde conseguir Lore Ipsum ', 'Hay muchas variaciones de los pasajes de Lorem Ipsum disponibles, pero la mayoría sufrió alteraciones en alguna manera, ya sea porque se le agregó humor, o palabras aleatorias que no parecen ni un poco creíbles. Si vas a utilizar un pasaje de Lorem Ipsum, necesitás estar seguro de que no hay nada avergonzante escondido en el medio del texto. Todos los generadores de Lorem Ipsum');
+
+INSERT INTO Article(title, content, created_by, creation_date, last_modification)
+VALUES ('He atropellao a mi primo', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris'
+, 'el primo' ,'2020-02-10 18:33:08', '2020-02-10 18:33:08');
 
 SELECT * FROM Article;
 

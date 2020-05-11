@@ -51,7 +51,6 @@ class ORM {
     }
   }
 
- 
   public function persist($object) {
     // TODO: Implement this function
     $this->query .= $object;
@@ -68,11 +67,10 @@ class ORM {
     $query = '';
   }
 
-  //select("users", "user_id, username, email", "user_id > 3", true);
   public function select($table, $values = "*", $condition = null, $multiple = true){
     $query = "SELECT $values FROM $table ";
     if($condition !== NULL){
-      $query .= "WHERE $condition"; 
+      $query .= "$condition"; 
     }
     $query .= ";";
 

@@ -27,7 +27,7 @@ class LoginController extends AppController {
 
   public function correctCredentials($usernameEmail, $password, $remember) {
     // Check if the user introduced exists in the database and if the password is correct.
-  	$result = $this->orm->select("User", "*", "username = '$usernameEmail' OR email = '$usernameEmail'", false);
+  	$result = $this->orm->select("User", "*", "WHERE username = '$usernameEmail' OR email = '$usernameEmail'", false);
 
   	if(is_null($result["username"])){
   		// User not found.

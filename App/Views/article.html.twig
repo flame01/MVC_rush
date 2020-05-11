@@ -1,0 +1,47 @@
+{#
+** EPITECH PROJECT, 2020:
+** MVC_Rush_PHP
+**
+** article.html.twig
+** File description:
+**  This file is in charge of show data in article.html.twig
+**
+#}
+{# index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<style type="text/css">
+		.container{
+			margin-top: 5vw;
+			padding: 5vw;
+			background-color: #66a3ff;
+			border-radius:15px;
+		}
+		.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  			background-color: white;
+		}
+		.article-container{
+			padding: 1vw;
+			background-color: #ffbf80;
+			border-radius:15px;
+		}
+
+
+	</style>
+
+	<div class="container article-container" align="center">
+		<div class="header" align="left">
+			<h5>{{ article.title }}</h5>
+			<span>Created by {{ article.created_by }}</span> on <span>{{ article.creation_date }}</span>
+			<hr>
+		</div>
+		<div class="content" align="left">
+			<article>{{ article.content }}</article>
+			<br>
+		</div>
+		<br>
+	</div>
+
+{% endblock %}

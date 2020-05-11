@@ -35,6 +35,9 @@
     <li><a class="right-button" href="register">Register</a></li>
     <li><a class="right-button" href="login">Login</a></li>
   {% else %}
+    {%  if session.get('group_id') < 2 %}
+      <li><a class="right-button" href="jamau">Write new article</a></li>
+    {% endif %}
     {%  if session.get('group_id') == 0 %}
       <li><a class="right-button" href="admin">Administration</a></li>
     {% endif %}

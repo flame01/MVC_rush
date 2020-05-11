@@ -22,28 +22,36 @@
 		.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   			background-color: white;
 		}
+		.article-container{
+			padding: 1vw;
+			background-color: #ffbf80;
+			border-radius:15px;
+		}
 
 
 	</style>
 
 	<div class="container my-container" align="center">
 		<h1>Recent articles</h1>
-		<table class="table table-hover container my-container">
-			<thead>
-				<tr class="bg-warning">
-					<th scope="col">Username</th>
-					<th scope="col">Email</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for user in userList %}
-					<tr>
-						<td>{{ user.username }}</td>
-						<td>{{ user.email }}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>	
+		<br>
+		{% for article in articlesList %}
+			<div class="article-container">
+				<div class="header" align="left">
+					<h5>{{ article.title }}</h5>
+					<span>Created by {{ article.created_by }}</span> on <span>{{ article.creation_date }}</span>
+					<hr>
+				</div>
+				<div class="content" align="left">
+					<article>{{ article.content }}...</article>
+					<br>
+				</div>
+				<form action="/article" method="GET" align="right" target="_blank">
+					<input  type="hidden" value="{{ article.article_id }}" name="id">
+					<button type="submit" class="btn btn-primary" n>Read whole article</button>
+				</form>
+			</div>
+			<br>
+		{% endfor %}	
 	</div>
 
 {% endblock %}
