@@ -18,6 +18,22 @@ CREATE TABLE User (
     PRIMARY KEY(user_id)
 );
 
+
+INSERT INTO User(username, password, email)
+VALUES ('Blueplant12', '1234', 'vegan@iam.com'),
+('k3yb0ard', '1234', 'key@email.com'),
+('darkswan', '1234', 'dark@swan.com'),
+('user', '1234', 'user@user.com'),
+('user2', '1234', 'user2@user.com'),
+('user3', '1234', 'user3@user.com'),
+('pipo', '1234', 'pipo@email.com');
+
+INSERT INTO User(username, password, email, group_id)
+VALUES ('admin', '123', 'admin@system.com', 0),
+('writer', '123', 'writer@email.com', 1);
+
+SELECT * FROM User;
+
 #DROP TABLE IF EXISTS Article;
 CREATE TABLE Article (
 	article_id INT NOT NULL AUTO_INCREMENT,
@@ -52,19 +68,5 @@ CREATE TABLE Comment (
 
 
 
-INSERT INTO User(username, password, email)
-VALUES ('Blueplant12', '1234', 'vegan@iam.com'),
-('k3yb0ard', '1234', 'key@email.com'),
-('darkswan', '1234', 'dark@swan.com'),
-('user', '1234', 'user@user.com'),
-('user2', '1234', 'user2@user.com'),
-('user3', '1234', 'user3@user.com'),
-('pipo', '1234', 'pipo@email.com');
-
-INSERT INTO User(username, password, email, group_id)
-VALUES ('admin', '123', 'admin@system.com', 0),
-('writer', '123', 'writer@email.com', 1);
-
-SELECT * FROM User;
 
 
