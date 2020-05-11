@@ -4,8 +4,7 @@ namespace App\Helpers;
 
 use App\Helpers\Session;
 
-class FlashError
-{
+class FlashError{
   const _ERROR_ = 'error';
 
   private $session;
@@ -15,8 +14,7 @@ class FlashError
   /**
    * Private constructor so nobody else can instantiate it.
    */
-  private function __construct()
-  {
+  private function __construct(){
     $this->session = Session::getInstance();
   }
 
@@ -25,8 +23,7 @@ class FlashError
    *
    * @return FlashError - Instance of the FlashError.
    */
-  public static function getInstance()
-  {
+  public static function getInstance(){
     if (is_null(self::$instance)) {
       self::$instance = new FlashError();
     }
@@ -36,24 +33,21 @@ class FlashError
   /**
    * @param string $flash - Flash error text
    */
-  public function set($flash)
-  {
+  public function set($flash){
     $this->session->set(self::_ERROR_, $flash);
   }
 
   /**
    * @return string - Flash error text
    */
-  public function get()
-  {
+  public function get(){
     $flash = $this->session->get(self::_ERROR_);
     $this->session->remove(self::_ERROR_);
 
     return $flash;
   }
 
-  public function call()
-  {
+  public function call(){
     var_dump($this->session->get(self::_ERROR_));
   }
 }

@@ -18,21 +18,16 @@ use App\Models\User;
 
 class UserSettingsController extends AppController {
   public function settings_view(Request $request) {
-    $userList = $this->orm->select("User");
-      session_start();
 
-      $session["username"] = $_SESSION["username"];
-      $session["email"] = $_SESSION["email"];
-      $session["group_id"] = $_SESSION["group_id"];
+    if ($this->session->get("username") !== false) {
+      $userList = $this->orm->select("User");
       
-      if(empty($_SESSION["username"])){
-        $session["username"] = $_SESSION["username"];
-        $session["email"] = $_SESSION["email"];
-        $session["group_id"] = $_SESSION["group_id"];
-      }
-  
-    // Render the index_view in index.html.twig
-  	return $this->render('userSettings.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session, 'error' => $this->flashError]);
+      // Render the settings_view in userSettings.html.twig
+      return $this->render('userSettings.html.twig', ['base' => $request->base, 'userList' => $userList, 'session' => $this->session, 'error' => $this->flashError]);
+    }else{
+      $this->redirect('index', '302');
+    }
+    
   }
 
   public function correctCredentials($username, $password, $passwordConfirmation) {
@@ -41,7 +36,7 @@ class UserSettingsController extends AppController {
     $result = $this->orm->select("User", "*", "username = '$username'", false);
 
     if (empty($password) || empty($passwordConfirmation)) {
-      $err = $err . "Both password fields must be filled.<br>";
+      $err = $err . "Both paFssword fields must be filled.<br>";
 
     }elseif($password !== $passwordConfirmation) {
       $err = $err . "Both password fields must coincide.<br>";
@@ -57,6 +52,7 @@ class UserSettingsController extends AppController {
     var_dump($username);
     return true;
   }
+
   public function deleteAccount(Request $request) {
     $session = new SessionController();
     
@@ -65,7 +61,6 @@ class UserSettingsController extends AppController {
 
         $usernameToDelete = $session->sessionUsername;
         $result = $this->orm->delete("User", "username = '$usernameToDelete'");
-        
         if($result == 1){
             $message = "The account has been deleted";
         }else{
@@ -73,6 +68,7 @@ class UserSettingsController extends AppController {
         }
         
         $this->flashError->set($message);
+        //Logout session after deleting the user.
         $this->redirect('logout', '302');
       }
 

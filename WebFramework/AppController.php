@@ -51,5 +51,4 @@ class AppController {
   public function redirect(string $url, string $status) {
     header('Location: ' . $url, true, $status);
   }
-
 }

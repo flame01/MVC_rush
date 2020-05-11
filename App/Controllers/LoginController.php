@@ -18,7 +18,11 @@ use App\Models\User;
 
 class LoginController extends AppController {
   public function login_view(Request $request) {
-    return $this->render('auth/login.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
+    if ($this->session->get("username") === false) {
+      return $this->render('auth/login.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
+    }else{
+      $this->redirect('index', '302');
+    }
   }
 
   public function correctCredentials($usernameEmail, $password, $remember) {
@@ -33,16 +37,17 @@ class LoginController extends AppController {
   		if($result["password"] === $password){
   			// Passwords match.
   			//Assign session values.
-  			session_start();
-  			$_SESSION["user_id"] = $result["user_id"];
-  			$_SESSION["username"] = $result["username"];
-        $_SESSION["email"] = $result["email"];
-        $_SESSION["group_id"] = $result["group_id"];
+        $this->session->set("user_id", $result["user_id"]);
+        $this->session->set("username", $result["username"]);
+        $this->session->set("email", $result["email"]);
+        $this->session->set("group_id", $result["group_id"]);
+
         //Check if Remember me is checked and create cookies.
         if(isset($remember)){
-          setcookie("username", $_SESSION["username"], time()+3600);
-          setcookie("email", $_SESSION["email"], time()+3600);
-          setcookie("group_id", $_SESSION["group_id"], time()+3600);
+          setcookie("user_id", $this->session->get("user_id"), time()+3600);
+          setcookie("username", $this->session->get("username"), time()+3600);
+          setcookie("email", $this->session->get("email"), time()+3600);
+          setcookie("group_id", $this->session->get("group_id"), time()+3600);
         }
   			return true;
   		}
@@ -58,12 +63,8 @@ class LoginController extends AppController {
     $remember = $request->params['remember_me'];
     try{
     	if ($this->correctCredentials($usernameEmail, $password, $remember)){
-        $session["username"] = $_SESSION["username"];
-        $session["email"] = $_SESSION["email"];
-        $session["group_id"] = $_SESSION["group_id"];
-
         //redirect to index
-        $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session,'error' => $this->flashError]);
+        $this->redirect('index', '302');
 
     	}else{
     		$err = "Invalid credentials.<br>";

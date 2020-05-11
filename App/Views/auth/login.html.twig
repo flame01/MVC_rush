@@ -10,10 +10,6 @@
 {# auth/register.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block navbar %}
-  {% include('navbar.html.twig') %}
-{% endblock %}
-
 {% block body %}
   
   <style type="text/css">
@@ -39,7 +35,7 @@
     <hr>
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form action="/{{ base }}login" name="sentMessage" id="contactForm" method="post" novalidate>
+        <form action="/{{ base }}login" name="sentMessage" id="contactForm" method="POST" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username/Email</label>

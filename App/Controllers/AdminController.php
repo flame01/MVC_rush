@@ -20,20 +20,13 @@ class AdminController extends AppController{
 
   public function admin_view(Request $request){
     $userList = $this->orm->select("User");
-    session_start();
 
-    $session["username"] = $_SESSION["username"];
-    $session["email"] = $_SESSION["email"];
-    $session["group_id"] = $_SESSION["group_id"];
-
-    if(empty($_SESSION["username"])){
-      $session["username"] = $_SESSION["username"];
-      $session["email"] = $_SESSION["email"];
-      $session["group_id"] = $_SESSION["group_id"];
+    if ($this->session->get("group_id") === '0') {
+      // Render the admin_view in admin.html.twig
+      return $this->render('admin.html.twig', ['base' => $request->base, 'userList' => $userList, 'session' => $this->session]);
+    }else{
+      $this->redirect('index', '302');
     }
-
-    // Render the admin_view in admin.html.twig
-  	return $this->render('admin.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session]);
   }
 
   public function admin_delete(Request $request){
@@ -53,21 +46,5 @@ class AdminController extends AppController{
         "success" => $success,
         "message" => $message
     ]);
-    /*
-    $userList = $this->orm->select("User");
-
-      $session["username"] = $_SESSION["username"];
-      $session["email"] = $_SESSION["email"];
-      $session["group_id"] = $_SESSION["group_id"];
-
-      if(empty($_SESSION["username"])){
-        $session["username"] = $_SESSION["username"];
-        $session["email"] = $_SESSION["email"];
-        $session["group_id"] = $_SESSION["group_id"];
-      }
-
-    return $this->render('views/admin.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session]);
-    */
-  }
-  
+  } 
 }

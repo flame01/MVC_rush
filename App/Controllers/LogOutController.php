@@ -23,6 +23,11 @@ class LogOutController extends AppController {
 	session_destroy();
 	setcookie('username','', time()-3600);
 	setcookie('email','', time()-3600);
-    return $this->render('auth/login.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
+	setcookie('user_id','', time()-3600);
+	setcookie('group_id','', time()-3600);
+
+	//redirect to login
+    $this->redirect('login', '302');
+    //return $this->render('auth/login.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
   }   
 }

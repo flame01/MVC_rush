@@ -18,9 +18,12 @@ use App\Models\User;
 
 class AuthController extends AppController {
   public function register_view(Request $request) {
-    // Render the register_view in auth/register.html.twig
-    return $this->render('auth/register.html.twig', ['base' => $request->base,
-      'error' => $this->flashError]);
+    if ($this->session->get("username") === false) {
+      // Render the register_view in auth/register.html.twig
+      return $this->render('auth/register.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
+    }else{
+      $this->redirect('index', '302');
+    }
   }
 
   public function userExists($userToInsert, $emailToInsert) {
@@ -81,7 +84,6 @@ class AuthController extends AppController {
     } catch (\Exception $e) {
       $this->flashError->set($e->getMessage());
       $this->redirect('/' . $request->base . 'register', '302');
-      
     }
   }
 }

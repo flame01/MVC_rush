@@ -18,22 +18,9 @@ use App\Models\User;
 
 class IndexController extends AppController{
   public function index_view(Request $request){
-
       $userList = $this->orm->select("User");
-      session_start();
-
-      $session["username"] = $_SESSION["username"];
-      $session["email"] = $_SESSION["email"];
-      $session["group_id"] = $_SESSION["group_id"];
-
-      if(empty($_SESSION["username"])){
-        $session["username"] = $_SESSION["username"];
-        $session["email"] = $_SESSION["email"];
-        $session["group_id"] = $_SESSION["group_id"];
-      }
-  
+    
     // Render the index_view in index.html.twig
-  	return $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'sessionValues' => $session]);
+  	return $this->render('index.html.twig', ['base' => $request->base, 'userList' => $userList, 'session' => $this->session]);
   }
-  
 }

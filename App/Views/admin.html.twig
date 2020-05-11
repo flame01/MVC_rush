@@ -11,10 +11,6 @@
 
 {% extends 'base.html.twig' %}
 
-{% block navbar %}
-	{% include('navbar.html.twig') %}
-{% endblock %}
-
 {% block body %}
 
 
@@ -32,7 +28,6 @@
 
 	</style>
 
-	{%  if sessionValues["group_id"] == 0 %}
 		<div class="container my-container" align="center">
 			<h2>Users administration</h2>
 			<table class="table table-hover my-container container">
@@ -97,8 +92,5 @@
 			</table>	
 			<a class="btn btn-info" href="admin/create">Create new user</a>
 		</div>
-	{% else %}
-		<h1>You are not an admin<h1>
-	{% endif %}
 
 {% endblock %}

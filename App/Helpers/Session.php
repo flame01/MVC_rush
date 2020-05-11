@@ -10,8 +10,7 @@ class Session{
   /**
    * Private constructor so nobody else can instantiate it.
    */
-  private function __construct()
-  {
+  private function __construct(){
     session_start();
   }
 
@@ -23,6 +22,12 @@ class Session{
   public static function getInstance(){
     if (is_null(self::$instance)) {
       self::$instance = new Session();
+      if($_COOKIE["username"] != ""){
+        self::$instance->set("user_id", $_COOKIE["user_id"]);
+        self::$instance->set("username", $_COOKIE["username"]);
+        self::$instance->set("email", $_COOKIE["email"]);
+        self::$instance->set("group_id", $_COOKIE["group_id"]);
+      }     
     }
     return self::$instance;
   }

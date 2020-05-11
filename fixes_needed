@@ -3,5 +3,9 @@ Things to fix:
 	DONE: 2. Show an error after failed login.
 	DONE: 3. Check if password and confirm password are correct before deleting user and Redirect the user after delete it.
 	DONE: 4. logout user after deleting his/her account.
-	5. Redirect to index when session is initiated and user tries to go into register or login page.
+	DONE: 5. Redirect to index when session is initiated and user tries to go into register or login page.
 	6. Delete a user from administration page.
+	7. PHASE 3.
+
+	
+	!8: setcookies value into session array in session LINE 25.

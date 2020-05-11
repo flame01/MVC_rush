@@ -40,7 +40,7 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username</label>
-              <input type="text" class="form-control" value="{{ sessionValues["username"] }}" id="name" name="username" required
+              <input type="text" class="form-control" value="{{ session.get('username') }}" id="name" name="username" required
                  data-validation-required-message="Please enter your name." disabled>
               <p class="help-block text-danger"></p>
             </div>
@@ -48,7 +48,7 @@
            <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Email</label>
-              <input type="text" class="form-control" value="{{ sessionValues["email"] }}" id="name" name="email" required
+              <input type="text" class="form-control" value="{{ session.get('email') }}" id="name" name="email" required
                  data-validation-required-message="Please enter your name." disabled>
               <p class="help-block text-danger"></p>
             </div>
@@ -75,7 +75,7 @@
           </div>
           
         </form>
-         <div class="errorMessage" align="center">      {{ error.get() | raw }}
+         <div class="errorMessage" align="center">{{ error.get() | raw }}
            </div>
       </div>
     </div>
