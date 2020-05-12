@@ -28,3 +28,7 @@ $router->use('POST', 'admin/save', new App\Controllers\AdminController(), 'admin
 $router->use('POST', 'delete', new App\Controllers\AdminController(), 'admin_delete');
 
 $router->use('GET', 'article', new App\Controllers\ArticleController(), 'article_view');
+
+$router->use('GET', 'article-new', new App\Controllers\ArticleController(), 'publish_article_view');
+
+$router->use('POST', 'publish', new App\Controllers\ArticleController(), 'publish_article');

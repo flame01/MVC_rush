@@ -21,7 +21,58 @@ class ArticleController extends AppController {
     	$article_id = $request->params['id'];
 
     	$articleInfo = $this->orm->select("Article", "*", "WHERE article_id = '$article_id'", false);
+    	$commentsList = $this->orm->select("Comment", "*", "WHERE article_id = '$article_id'", true);
     	// Render the article_view in article.html.twig
-  		return $this->render('article.html.twig', ['article' => $articleInfo, 'session' => $this->session]);
+  		return $this->render('article.html.twig', ['article' => $articleInfo, 'comments' => $commentsList, 'session' => $this->session]);
 	}
+
+
+
+	public function publish_article_view(Request $request){
+		return $this->render('writeArticle.html.twig', ['session' => $this->session, 'error' => $this->flashError]);
+	}
+
+
+
+	public function check_article($title, $content){
+		$err = "";
+
+		if(strlen($title) < 15 || strlen($content) < 50){
+			if(strlen($title) < 15){
+				$err .= "Title should have more than 15 characters.";
+			}
+			if(strlen($content) < 50){
+				$err .= "Title should have more than 50 characters.";
+			}
+			throw new \Exception($err);
+		}
+		return true;
+	}
+
+	public function addToDB($title, $content, $username){
+		$query = "INSERT INTO Article(title, content, created_by) VALUES ('$title', '$content', '$username');";
+    	$this->orm->persist($query);
+    	$this->orm->flush();
+	}
+
+	public function publish_article(Request $request){
+		$title = $request->params["title"];
+		$content = $request->params["content"];
+		try{
+			if($this->check_article($title, $content)){
+				//add article to DB.
+				$this->addToDB($title, $content, $this->session->get("username"));
+				//redirect to index
+        		$this->redirect('index', '302');
+			}
+
+
+		}catch (\Exception $e) {
+      		$this->flashError->set($e->getMessage());
+      		//redirect to article-new
+        		$this->redirect('article-new', '302');
+		}
+		//return $this->render('writeArticle.html.twig', ['session' => $this->session]);
+	}
+
 }

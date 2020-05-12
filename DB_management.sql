@@ -46,6 +46,10 @@ CREATE TABLE Article (
     PRIMARY KEY(article_id)
 );
 
+INSERT INTO Article(title, content, created_by)
+VALUES ('Compre un pez', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris'
+, 'la tienda de peces');
+
 INSERT INTO Article(title, content)
 VALUES ('About how I earned 1 million dooola', 'So my whole life, really it has been a NO and I fought through it. I started off in brooklyn, my father gave me a small loan of 1 million dollar, I came into Manhattan and I had to pay him back with interests'),
 ('Sample title', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
@@ -67,10 +71,16 @@ CREATE TABLE Comment (
     commented_by VARCHAR(255),
     creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_modification TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(comment_id)
+    FOREIGN KEY (article_id) REFERENCES Article(article_id),
+	PRIMARY KEY(comment_id)
 );
 
+INSERT INTO Comment(content, article_id, commented_by)
+VALUES('Primer comentario en article_id: 2','2','writer'),
+('I am ansewring thread number 4','4','admin'),
+('I am ansewring thread number 333333333333333333333','3','new'),
+('I am ALSO ansewring thread number 3','3','darkswan'),
+('ES LA POLE?','1','admin');
 
 
-
-
+SELECT * FROM Comment;

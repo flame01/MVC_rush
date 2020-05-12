@@ -18,10 +18,24 @@ use App\Models\User;
 
 class IndexController extends AppController{
   public function index_view(Request $request){
+  	$sort = "ORDER BY creation_date DESC";
+  	$value = "newest";
+
+  	if($request->params["sortBy"] !== NULL){
+  		$value = $request->params["sortBy"];
+  		if ($value == "oldest") {
+  			$sort = "ORDER BY creation_date ASC";
+  		}elseif ($value == "title") {
+  			$sort = "ORDER BY title ASC";
+  		}elseif ($value == "mostCommented") {
+  			// implement
+  		}
+  	}
+
   	//select($table, $values = "*", $condition = null, $multiple = true)
-    $articlesList = $this->orm->select("Article", "article_id, title, LEFT(content, 150) AS 'content', created_by, creation_date", "ORDER BY creation_date DESC", true);
+    $articlesList = $this->orm->select("Article", "article_id, title, LEFT(content, 150) AS 'content', created_by, creation_date", $sort, true);
 
     // Render the index_view in index.html.twig
-  	return $this->render('index.html.twig', ['base' => $request->base, 'articlesList' => $articlesList, 'session' => $this->session]);
+  	return $this->render('index.html.twig', ['base' => $request->base, 'articlesList' => $articlesList, 'session' => $this->session, 'sortBy' => $value]);
   }
 }

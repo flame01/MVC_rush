@@ -1,0 +1,74 @@
+{#
+** EPITECH PROJECT, 2020:
+** MVC_Rush_PHP
+**
+** writeArticle.html.twig
+** File description:
+**  This file is in charge of show data in article.html.twig
+**
+#}
+{# index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<style type="text/css">
+		.container{
+			margin-top: 5vw;
+			padding: 5vw;
+			background-color: #66a3ff;
+			border-radius:15px;
+		}
+		.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  			background-color: white;
+		}
+		.article-container{
+			padding: 1vw;
+			background-color: #ffbf80;
+			border-radius:15px;
+		}
+
+		.errorMessage{
+      		color: red;
+    	}
+
+		textarea{
+			resize: none;
+      border-radius: 10px;
+		}
+	</style>
+
+	<div class="container">
+    <h2 align="center">Write new article</h2>
+    <hr>
+   
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <form action="publish" method="POST">
+
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+            	<div style="display: inline-block" align="right">
+              <label>Author: </label>
+              <label>{{ session.get('username') }}</label>
+              	<label>Date: <script> document.write(new Date().toLocaleDateString()); </script></label>
+              </div>
+              <h6>Article title:</h6>
+              <textarea maxlength="50" cols="70" rows="1" type="text" name="title"></textarea>
+              <h6>Article content:</h6>
+              <textarea maxlength="500" cols="70" rows="10" name="content"></textarea>
+
+            </div>
+          </div>
+
+          <div class="form-group" align="center">
+            <br>
+            <div class="errorMessage" align="center">{{ error.get() | raw }}</div>
+            <button type="submit" class="btn btn-info" id="sendMessageButton">Publish</button>
+
+          </div>
+        </form>
+      </div>
+
+  </div>
+
+{% endblock %}

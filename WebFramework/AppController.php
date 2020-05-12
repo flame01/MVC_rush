@@ -37,8 +37,7 @@ class AppController {
    * @param string $view - Path of the view to render
    * @param array $context - Associative array used as a TWIG context. (default: [])
    */
-  public function render(string $view, array $context = [])
-  {
+  public function render(string $view, array $context = []) {
     echo $this->twig->render($view, $context);
   }
 

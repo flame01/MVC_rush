@@ -28,6 +28,11 @@
 			border-radius:15px;
 		}
 
+		textarea{
+			resize: none;
+			border-radius: 10px;
+		}
+
 
 	</style>
 
@@ -43,5 +48,22 @@
 		</div>
 		<br>
 	</div>
+	{% for comment in comments %}
+		<div class="container comment-cortainer" align="center">
+			<article>{{ comment.content }}</article>
+			<hr>
+			<h6>Commented by {{ comment.commented_by }} on {{ comment.creation_date }}</h6>
+		</div>	    	
+	{% endfor %}
+	<br><br><br>
+	{% if session.get('group_id') == 0 %}
+		<div align="center">
+			<h6>Comment on this article:</h6>
+	    	<textarea maxlength="500" cols="70" rows="5" name="content"></textarea>
+	    	<br>
+	    	<button type="submit" class="btn btn-primary" id="sendMessageButton">Comment</button>
+		</div>
+	{% endif %}
 
+	
 {% endblock %}

@@ -28,14 +28,25 @@
 			border-radius:15px;
 		}
 
-
 	</style>
 
+	
+
 	<div class="container my-container" align="center">
-		<h1>Recent articles</h1>
+		<h1>Articles</h1>
+		<br>
+		<div align="right">
+			<span>Sort by: </span>
+			<select id="mySelect" class="form-control-sm" >
+				<option id="newest">Date: newest</option>
+				<option id="oldest">Date: oldest</option>
+				<option id="title">Title</option>
+				<option id="mostCommented">Most commented</option>
+			</select>
+		</div>
 		<br>
 		{% for article in articlesList %}
-			<div class="article-container">
+			<div class="article-container" date="{{ article.creation_date }}" title="{{ article.title }}">
 				<div class="header" align="left">
 					<h5>{{ article.title }}</h5>
 					<span>Created by {{ article.created_by }}</span> on <span>{{ article.creation_date }}</span>
@@ -53,5 +64,16 @@
 			<br>
 		{% endfor %}	
 	</div>
+
+	<script type="text/javascript">
+	$(function(){
+		//Change sort by selected children.
+		$("#{{sortBy}}").attr("selected", true);
+		$("#mySelect").on('change', function(){
+			var id = $(this).children(":selected").attr("id");
+			window.location.replace("?sortBy="+id);	
+		});
+	});
+	</script>
 
 {% endblock %}
