@@ -35,10 +35,10 @@
     <li><a class="right-button" href="register">Register</a></li>
     <li><a class="right-button" href="login">Login</a></li>
   {% else %}
-    {%  if session.get('group_id') < 2 %}
+    {% if session.get('group_id') < 2 %}
       <li><a class="right-button" href="article-new">Write new article</a></li>
     {% endif %}
-    {%  if session.get('group_id') == 0 %}
+    {% if session.get('group_id') == 0 %}
       <li><a class="right-button" href="admin">Administration</a></li>
     {% endif %}
     <li><a class="right-button" href="logout">Log Out</a></li>

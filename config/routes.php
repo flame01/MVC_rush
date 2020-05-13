@@ -32,3 +32,5 @@ $router->use('GET', 'article', new App\Controllers\ArticleController(), 'article
 $router->use('GET', 'article-new', new App\Controllers\ArticleController(), 'publish_article_view');
 
 $router->use('POST', 'publish', new App\Controllers\ArticleController(), 'publish_article');
+
+$router->use('POST', 'comment', new App\Controllers\ArticleController(), 'comment_on_article');

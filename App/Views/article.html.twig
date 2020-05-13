@@ -13,12 +13,6 @@
 
 {% block body %}
 	<style type="text/css">
-		.container{
-			margin-top: 5vw;
-			padding: 5vw;
-			background-color: #66a3ff;
-			border-radius:15px;
-		}
 		.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   			background-color: white;
 		}
@@ -26,6 +20,15 @@
 			padding: 1vw;
 			background-color: #ffbf80;
 			border-radius:15px;
+			margin-top: 5vw;
+			padding: 5vw;
+
+		}
+		.comment-container{
+			background-color: lightgrey;
+			margin-top: 1vw;
+			border-radius:15px;
+			padding: 1vw;
 		}
 
 		textarea{
@@ -33,37 +36,69 @@
 			border-radius: 10px;
 		}
 
+		.errorMessage{
+      		color: red;
+    	}
+
 
 	</style>
 
 	<div class="container article-container" align="center">
 		<div class="header" align="left">
-			<h5>{{ article.title }}</h5>
+			<h5 id="article-title">{{ article.title }}</h5>
+			<br>
 			<span>Created by {{ article.created_by }}</span> on <span>{{ article.creation_date }}</span>
 			<hr>
 		</div>
 		<div class="content" align="left">
-			<article>{{ article.content }}</article>
+			<article id="article-content">{{ article.content }}</article>
 			<br>
 		</div>
 		<br>
+		{%  if session.get('username') == article.created_by or session.get('group_id') == 0 %}
+			<button align="right" class="btn btn-warning" id="editArticle">Edit article</button>
+			
+		{% endif %}
 	</div>
-	{% for comment in comments %}
-		<div class="container comment-cortainer" align="center">
-			<article>{{ comment.content }}</article>
-			<hr>
-			<h6>Commented by {{ comment.commented_by }} on {{ comment.creation_date }}</h6>
-		</div>	    	
-	{% endfor %}
+	<br>
+	<h6 class="container">Comments: </h6>
+	{%  if comments|length == 0 %}
+		<article class="container">There are no comments about this article yet.</article>
+	{% else %}
+
+		{% for comment in comments %}
+			<div class="container comment-container" align="center">
+				<article>{{ comment.content }}</article>
+				<hr>
+				<span style="opacity: 40%">Commented by {{ comment.commented_by }} on {{ comment.creation_date }}</span>
+			</div>	    	
+		{% endfor %}
+	{% endif %}
 	<br><br><br>
-	{% if session.get('group_id') == 0 %}
+	{% if session.get('group_id') is not empty %}
 		<div align="center">
 			<h6>Comment on this article:</h6>
-	    	<textarea maxlength="500" cols="70" rows="5" name="content"></textarea>
-	    	<br>
-	    	<button type="submit" class="btn btn-primary" id="sendMessageButton">Comment</button>
+			<form action="/comment" method="POST">
+		    	<textarea maxlength="500" cols="70" rows="5" name="comment"></textarea>
+		    	<br>
+		    	<input type="hidden" name="article_id" value="{{ article.article_id }}">
+		    	<br>
+		    	<div class="errorMessage" align="center">{{ error.get() | raw }}</div>
+		    	<br>
+		    	<button type="submit" class="btn btn-primary" id="sendMessageButton">Comment</button>
+	    	</form>
 		</div>
 	{% endif %}
-
-	
+	<br>
+	<script type="text/javascript">
+	$(function(){
+		$("#editArticle").on('click', function(){
+			$("#article-title").replaceWith(function (){
+				$(this).text();
+				let value = $(this).text();
+				return $("<input type='text' value='" + value + "'>").append($(this).contents());
+			});
+		});
+	});
+	</script>
 {% endblock %}

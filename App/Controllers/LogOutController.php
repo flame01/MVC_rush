@@ -17,7 +17,6 @@ use WebFramework\Request;
 use App\Models\User;
 
 class LogOutController extends AppController {
-
   public function logout(Request $request) {
   	session_start();
 	session_destroy();
@@ -26,8 +25,7 @@ class LogOutController extends AppController {
 	setcookie('user_id','', time()-3600);
 	setcookie('group_id','', time()-3600);
 
-	//redirect to login
+	//redirect to login after logout
     $this->redirect('login', '302');
-    //return $this->render('auth/login.html.twig', ['base' => $request->base, 'error' => $this->flashError]);
   }   
 }
