@@ -30,6 +30,8 @@
 
 		<div class="container my-container" align="center">
 			<h2>Users administration</h2>
+			<br>
+			<div class="infoMessage bg-warning rounded-pill" align="center">{{ info.get() | raw }}</div>
 			<table class="table table-hover my-container container">
 				<thead>
 					<tr class="bg-warning">
@@ -81,7 +83,7 @@
 							</td>
 							<td>{{ user.creation_date }}</td>
 							<td>{{ user.last_modification }}</td>
-							<form action="admin/delete" method ="POST">
+							<form action="admin-delete" method ="POST">
 				      			<input type="hidden" name="usernameToDelete" value="{{ user.username }}">
 				      			<td><button class="btn btn-danger" type="submit">Delete</button></td>
 						    </form>

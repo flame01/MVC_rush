@@ -25,7 +25,7 @@ $router->use('POST', 'settings', new App\Controllers\UserSettingsController(), '
 $router->use('GET', 'admin', new App\Controllers\AdminController(), 'admin_view');
 $router->use('POST', 'admin/create', new App\Controllers\AdminController(), 'admin_create');
 $router->use('POST', 'admin/save', new App\Controllers\AdminController(), 'admin_save_changes');
-$router->use('POST', 'delete', new App\Controllers\AdminController(), 'admin_delete');
+$router->use('POST', 'admin-delete', new App\Controllers\AdminController(), 'admin_delete');
 
 $router->use('GET', 'article', new App\Controllers\ArticleController(), 'article_view');
 
@@ -34,3 +34,5 @@ $router->use('GET', 'article-new', new App\Controllers\ArticleController(), 'pub
 $router->use('POST', 'publish', new App\Controllers\ArticleController(), 'publish_article');
 
 $router->use('POST', 'comment', new App\Controllers\ArticleController(), 'comment_on_article');
+
+$router->use('POST', 'article-delete', new App\Controllers\ArticleController(), 'delete_article');

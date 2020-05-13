@@ -29,8 +29,8 @@ VALUES ('Blueplant12', '1234', 'vegan@iam.com'),
 ('pipo', '1234', 'pipo@email.com');
 
 INSERT INTO User(username, password, email, group_id)
-VALUES ('admin', '123', 'admin@system.com', 0),
-('writer', '123', 'writer@email.com', 1);
+VALUES ('adminleggo', '123', 'admin@system.com', 0),
+('ProWriter', '123', 'writer@email.com', 1);
 
 SELECT * FROM User;
 

@@ -54,10 +54,24 @@
 			<article id="article-content">{{ article.content }}</article>
 			<br>
 		</div>
+		{%  if article.creation_date != article.last_modification %}
+			<div class="content" align="left">
+				<span class="bg-dark" style="color:white;">Last modification: {{ article.last_modification }}</span>
+				<br>
+			</div>
+
+		{% endif %}
 		<br>
 		{%  if session.get('username') == article.created_by or session.get('group_id') == 0 %}
-			<button align="right" class="btn btn-warning" id="editArticle">Edit article</button>
-			
+			<div align="right">
+				<button class="btn btn-success" id="saveArticleChanges">Save changes</button>
+				<button class="btn btn-warning" id="editArticle">Edit article</button><br>
+				<br><br>
+				<form class="deleteForm" action="article-delete" method="POST">
+					<input type="hidden" name="article_id" value="{{ article.article_id }}">
+					<button type="submit" class="btn btn-danger">Delete article</button>
+				</form>
+			</div>
 		{% endif %}
 	</div>
 	<br>
@@ -74,17 +88,16 @@
 			</div>	    	
 		{% endfor %}
 	{% endif %}
-	<br><br><br>
+	<br>
 	{% if session.get('group_id') is not empty %}
 		<div align="center">
-			<h6>Comment on this article:</h6>
+			<span>Comment on this article:</span>
 			<form action="/comment" method="POST">
-		    	<textarea maxlength="500" cols="70" rows="5" name="comment"></textarea>
+		    	<textarea maxlength="500" cols="100" rows="5" name="comment"></textarea>
 		    	<br>
-		    	<input type="hidden" name="article_id" value="{{ article.article_id }}">
+		    	<input type="hidden" id="article_id" name="article_id" value="{{ article.article_id }}">
 		    	<br>
 		    	<div class="errorMessage" align="center">{{ error.get() | raw }}</div>
-		    	<br>
 		    	<button type="submit" class="btn btn-primary" id="sendMessageButton">Comment</button>
 	    	</form>
 		</div>
@@ -92,13 +105,43 @@
 	<br>
 	<script type="text/javascript">
 	$(function(){
+		$("#saveArticleChanges").hide();
 		$("#editArticle").on('click', function(){
+
+			$("#saveArticleChanges").show();
 			$("#article-title").replaceWith(function (){
 				$(this).text();
 				let value = $(this).text();
-				return $("<input type='text' value='" + value + "'>").append($(this).contents());
+				return $("<textarea id='article-title' maxlength='50'cols='70' rows='1' type='text' value='" + value + "'>").append($(this).contents());
+			});
+
+			$("#article-content").replaceWith(function (){
+				$(this).text();
+				let value = $(this).text();
+				return $("<textarea id='article-content' maxlength='500' cols='70' rows='10'  type='text' value='" + value + "'>").append($(this).contents());
 			});
 		});
+
+		$("#saveArticleChanges").on('click', function(){
+			$("#saveArticleChanges").hide();
+			$("#article-title").replaceWith(function (){
+				$(this).text();
+				let value = $(this).text();
+				return $("<h5 id='article-title' value='" + value + "'>").append($(this).contents());
+			});
+			$("#article-content").replaceWith(function (){
+				$(this).text();
+				let value = $(this).text();
+				return $("<article id='article-content' value='" + value + "'>").append($(this).contents());
+			});
+		});
+
+		$(".deleteForm").submit(function(event) {
+			if(!confirm("Are you sure about deleting this article?")){
+				event.preventDefault();
+			}
+		});
+
 	});
 	</script>
 {% endblock %}

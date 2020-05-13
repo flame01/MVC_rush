@@ -22,14 +22,22 @@ class ArticleController extends AppController {
 
     	$articleInfo = $this->orm->select("Article", "*", "WHERE article_id = '$article_id'", false);
     	$commentsList = $this->orm->select("Comment", "*", "WHERE article_id = '$article_id'", true);
-    	// Render the article_view in article.html.twig
-  		return $this->render('article.html.twig', ['article' => $articleInfo, 'comments' => $commentsList, 'session' => $this->session, 'error' => $this->flashError]);
+    	
+    	if($articleInfo["article_id"] == NULL){
+    		$this->redirect('index', '302');
+    	}else{
+    		// Render the article_view in article.html.twig
+    		return $this->render('article.html.twig', ['article' => $articleInfo, 'comments' => $commentsList, 'session' => $this->session, 'error' => $this->flashError]);
+    	}
 	}
 
-
-
 	public function publish_article_view(Request $request){
-		return $this->render('writeArticle.html.twig', ['session' => $this->session, 'error' => $this->flashError]);
+		$groupCheck = $this->session->get("group_id");
+		if ($groupCheck === '0' or $groupCheck === '1') {
+			return $this->render('writeArticle.html.twig', ['session' => $this->session, 'error' => $this->flashError]);
+		}else{
+      		$this->redirect('index', '302');
+    	}
 	}
 
 
@@ -65,14 +73,27 @@ class ArticleController extends AppController {
 				//redirect to index
         		$this->redirect('index', '302');
 			}
-
-
 		}catch (\Exception $e) {
       		$this->flashError->set($e->getMessage());
       		//redirect to article-new
         		$this->redirect('article-new', '302');
 		}
-		//return $this->render('writeArticle.html.twig', ['session' => $this->session]);
+	}
+
+	public function delete_article(Request $request){
+		$article_id = $request->params["article_id"];
+
+		$author = $this->orm->select("Article", "created_by", "WHERE article_id = '$article_id'", false);
+
+		if($author == $this->session->get("username") || $this->session->get("group_id") == '0'){
+			$query = "DELETE FROM Comment WHERE article_id = '$article_id';";
+			$this->orm->persist($query);
+			
+			$query = "DELETE FROM Article WHERE article_id = '$article_id';";
+			$this->orm->persist($query);
+			$this->orm->flush();
+			$this->redirect('index', '302');
+		}		
 	}
 
 	public function check_comment($comment){
@@ -103,5 +124,8 @@ class ArticleController extends AppController {
         	$this->redirect('article?id='.$article_id, '302');
 		}
 	}
+
+
+
 
 }

@@ -23,7 +23,7 @@ class AdminController extends AppController{
 
     if ($this->session->get("group_id") === '0') {
       // Render the admin_view in admin.html.twig
-      return $this->render('admin.html.twig', ['base' => $request->base, 'userList' => $userList, 'session' => $this->session]);
+      return $this->render('admin.html.twig', ['base' => $request->base, 'userList' => $userList, 'session' => $this->session, 'info' => $this->flashError]);
     }else{
       $this->redirect('index', '302');
     }
@@ -33,7 +33,12 @@ class AdminController extends AppController{
     
     $usernameToDelete = $request->params['usernameToDelete'];
     $result = $this->orm->delete("User", "username = '$usernameToDelete'");
-      var_dump($usernameToDelete);
+    $info = "User '" . $usernameToDelete . "' is now resting in pepperonios.";
+    $this->flashError->set($info);
+
+    $this->redirect('admin', '302');
+
+
     if($result == 1){
       $success = true;
       $message = "The account has been deleted";
